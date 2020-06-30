@@ -1,0 +1,9 @@
+pillow
+pytest
+pytest-pep8
+flask
+requests
+matplotlib
+scipy
+pymodm
+dnspython
