@@ -16,7 +16,8 @@ class NewPhysician(MongoModel):
 
 def init_db():
     print("connecting to databse...")
-    connect("")
+    connect("mongodb+srv://aidan:<password>@cluster0.lmu1g.mongodb.net"
+            "/<dbname>?retryWrites=true&w=majority")
     print("database connected.")
 
 
