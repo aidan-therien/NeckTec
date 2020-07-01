@@ -12,6 +12,11 @@ def add_new_physician():
     r = requests.post(server_name+"/api/new_physician", json=new_physician)
     print(r.text)
 
+def get_physician_status():
+    r = requests.get(server_name+"/api/status/1")
+    print(r.text)
+
 
 if __name__ == '__main__':
-    add_new_physician()
+    # add_new_physician()
+    get_physician_status()
