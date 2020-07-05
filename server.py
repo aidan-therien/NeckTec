@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import requests
 import logging
+from datetime import datetime
 from pymodm import connect, MongoModel, fields
 from pymodm import errors as pymodm_errors
 
@@ -17,7 +18,7 @@ class NewPhysician(MongoModel):
 def read_physician(in_dict):
     phys = in_dict["phys_id"]
     data = in_dict["neck_angles"]
-    times = in_dict["timestamp"]
+    times = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
     return [phys, data, times]
 
 
