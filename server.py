@@ -31,7 +31,7 @@ def add_physician_to_db(info):
 
 def init_db():
     print("connecting to database...")
-    connect("mongodb+srv://james:nbzKGQnRbS8nXh5E@cluster0.lmu1g.mongodb.net"
+    connect("mongodb+srv://aidan:necktec@cluster0.lmu1g.mongodb.net"
             "/NeckTecDB?retryWrites=true&w=majority")
     print("database connected.")
 
@@ -53,11 +53,11 @@ def add_data(phys_id, data):
     phys_id = int(phys_id)
     try:
         temp = NewPhysician.objects.raw({"_id": phys_id}).first()
-        temp.neck_angles.append(data[0])
-        temp.timestamp.append(data[1])
-        temp.save()
     except pymodm_errors.DoesNotExist:
         return "Physician not found", 400
+    temp.neck_angles.append(data[0])
+    temp.timestamp.append(data[1])
+    temp.save()
     return "Successfully added data", 200
 
 
