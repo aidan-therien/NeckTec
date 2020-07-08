@@ -1,0 +1,10 @@
+{
+	"event": "post_data",
+	"url": "http://vcm-15220.vm.duke.edu:5000/api/add",
+	"requestType": "POST",
+	"json": {
+		"phys_id": "{{p}}",
+  		"data": "{{d}}"
+	},
+	"mydevices": true
+}

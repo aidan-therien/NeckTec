@@ -20,13 +20,13 @@ def get_physician_status():
 
 
 def add_physician_data():
-    str_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
-    data = [90, str_time]
-    r = requests.post(server_name+"/api/add/1", json=data)
+    data = {"phys_id": "1",
+            "data": 101.9}
+    r = requests.post(server_name+"/api/add", json=data)
     print(r.text)
 
 
 if __name__ == '__main__':
-    add_new_physician()
+    add_physician_data()
     # get_physician_status()
     # add_physician_data()
