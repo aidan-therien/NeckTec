@@ -49,14 +49,14 @@ def retrieve_physician_status(phys_id):
     return status_phys
 
 
-def add_data(phys_id, data):
-    phys_id = int(phys_id)
+def add_data(data):
+    phys_id = int(data["phys_id"])
     try:
         temp = NewPhysician.objects.raw({"_id": phys_id}).first()
     except pymodm_errors.DoesNotExist:
         return "Physician not found", 400
-    temp.neck_angles.append(data[0])
-    temp.timestamp.append(data[1])
+    temp.neck_angles.append(float(data["data"]))
+    temp.timestamp.append(datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"))
     temp.save()
     return "Successfully added data", 200
 
@@ -74,14 +74,15 @@ def get_physician_status(phys_id):
     return jsonify(retrieve_physician_status(phys_id))
 
 
-@app.route("/api/add/<phys_id>", methods=["POST"])
-def post_new_data(phys_id):
+@app.route("/api/add", methods=["POST"])
+def post_new_data():
     data = request.get_json()
-    return add_data(phys_id, data)
+    print("data received")
+    return add_data(data)
 
 
 if __name__ == '__main__':
     logging.basicConfig(filename="status.log", filemode='w',
                         level=logging.DEBUG)
     init_db()
-    app.run()
+    app.run(host="0.0.0.0")
