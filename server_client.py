@@ -6,7 +6,7 @@ server_name = "http://127.0.0.1:5000"
 
 def add_new_physician():
     str_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
-    new_physician = {"phys_id": 2,
+    new_physician = {"phys_id": 7,
                      "neck_angles": [2.234, 3.3456, 4.4567, 5],
                      "timestamp": [str_time, str_time, str_time]}
     r = requests.post(server_name+"/api/new_physician", json=new_physician)
@@ -25,7 +25,13 @@ def add_physician_data():
     print(r.text)
 
 
+def remove_physician():
+    r = requests.delete(server_name+"/api/delete/1")
+    print(r.text)
+
+
 if __name__ == '__main__':
     # add_new_physician()
     # get_physician_status()
-    add_physician_data()
+    # add_physician_data()
+    remove_physician()

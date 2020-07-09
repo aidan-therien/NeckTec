@@ -3,6 +3,7 @@ import requests
 import logging
 from pymodm import connect, MongoModel, fields
 from pymodm import errors as pymodm_errors
+import pymodm
 
 
 app = Flask(__name__)
@@ -30,7 +31,7 @@ def add_physician_to_db(info):
 
 def init_db():
     print("connecting to database...")
-    connect("mongodb+srv://james:nbzKGQnRbS8nXh5E@cluster0.lmu1g.mongodb.net"
+    connect("mongodb+srv://aidan:necktec@cluster0.lmu1g.mongodb.net"
             "/NeckTecDB?retryWrites=true&w=majority")
     print("database connected.")
 
@@ -77,6 +78,17 @@ def get_physician_status(phys_id):
 def post_new_data(phys_id):
     data = request.get_json()
     return add_data(phys_id, data)
+
+
+@app.route("/api/delete/<phys_id>", methods=["DELETE"])
+def delete_physician(phys_id):
+    phys_id = int(phys_id)
+    try:
+        db_phys = NewPhysician.objects.raw({"_id": phys_id}).first()
+    except pymodm_errors.DoesNotExist:
+        return "{} is not in the database".format(phys_id), 400
+    pymodm.delete(db_phys)
+    return "Successfully removed physician from database", 200
 
 
 if __name__ == '__main__':
