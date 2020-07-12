@@ -29,6 +29,28 @@ def add_physician_to_db(info):
     phys.save()
 
 
+def verify_input(in_dict):
+    expected_keys = ("phys_id", "data")
+    expected_values = (int, float)
+    for key, ty in zip(expected_keys, expected_values):
+        if key not in in_dict.keys():
+            return "{} key not found in input".format(key)
+        if type(in_dict[key]) != ty:
+            return "{} value is not the correct type".format(key)
+    return True
+
+
+def verify_new_phys(in_dict):
+    expected_keys = ("phys_id", "phys_name")
+    expected_values = (int, str)
+    for key, ty in zip(expected_keys, expected_values):
+        if key not in in_dict.keys():
+            return "{} key not found in input".format(key)
+        if type(in_dict[key]) != ty:
+            return "{} value is not the correct type".format(key)
+    return True
+
+
 def init_db():
     print("connecting to database...")
     connect("mongodb+srv://aidan:necktec@cluster0.lmu1g.mongodb.net"
@@ -55,8 +77,10 @@ def add_data(data):
         temp = NewPhysician.objects.raw({"_id": phys_id}).first()
     except pymodm_errors.DoesNotExist:
         return "Physician not found", 400
+    flag = verify_input(data)
     temp.neck_angles.append(float(data["data"]))
-    temp.timestamp.append(datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"))
+    temp.timestamp.append(datetime.strftime(datetime.now(),
+                                            "%Y-%m-%d %H:%M:%S"))
     temp.save()
     return "Successfully added data", 200
 
@@ -77,7 +101,9 @@ def get_physician_status(phys_id):
 @app.route("/api/add", methods=["POST"])
 def post_new_data():
     data = request.get_json()
-    print("data received")
+    verify_data = verify_input(data)
+    if verify_data is not True:
+        return verify_data, 400
     return add_data(data)
 
 

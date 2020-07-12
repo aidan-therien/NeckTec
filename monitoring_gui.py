@@ -36,7 +36,7 @@ def load_patient_data(patient_id):
     :return: a list containing recent patient information
     """
     # This will make a request
-    r = requests.get(server_name+"/"+patient_id+"/load_recent_data")
+    r = requests.get(server_name + "/" + patient_id + "/load_recent_data")
     return r.json()
 
 
@@ -54,7 +54,7 @@ def design_window():
     patient_id_box.grid(column=1, row=0)
 
     load_patient_button = ttk.Button(root, text="Load Patient Data")
-                                     # command=new_patient)
+    # command=new_patient)
     load_patient_button.grid(column=2, row=0)
 
     patient_session_text = ttk.Label(root, text="Select Date")
@@ -67,7 +67,7 @@ def design_window():
     patient_session_box.grid(column=1, row=1)
 
     load_patient_button = ttk.Button(root, text="Load Session Data")
-                                     # command=new_patient)
+    # command=new_patient)
     load_patient_button.grid(column=2, row=1)
 
     display_patient_id_text = ttk.Label(root, text="Patient ID:")
@@ -90,11 +90,11 @@ def design_window():
     display_timestamp_value.grid(column=1, row=6)
 
     exit_button = ttk.Button(root, text="Exit")
-                             # command=cancel)
+    # command=cancel)
     exit_button.grid(column=2, row=9)
 
     reset_button = ttk.Button(root, text="Reset Data")
-                              # command=reset)
+    # command=reset)
     reset_button.grid(column=1, row=9)
 
     root.mainloop()
