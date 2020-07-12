@@ -32,3 +32,21 @@ def test_verify_new_patient_info(data, expected):
     from server import verify_input
     answer = verify_input(data)
     assert answer == expected
+
+
+@pytest.mark.parametrize("data, expected",
+                         [({"phys_id": 1,
+                            "phys_name": "johnathan"}, True),
+                          ({"phys_id": 123,
+                            "phys_name": 1},
+                           "phys_name value is not the correct type"),
+                          ({"phys_id": 1,
+                            "age": 20},
+                           "phys_name key not found in input"),
+                          ({"phys_id": '123',
+                            "phys_name": 21},
+                           "phys_id value is not the correct type")])
+def test_verify_new_patient_info(data, expected):
+    from server import verify_new_phys
+    answer = verify_new_phys(data)
+    assert answer == expected
