@@ -4,6 +4,7 @@ import logging
 from datetime import datetime
 from pymodm import connect, MongoModel, fields
 from pymodm import errors as pymodm_errors
+import matplotlib.pyplot as plt
 
 
 app = Flask(__name__)
@@ -61,6 +62,22 @@ def add_data(data):
     return "Successfully added data", 200
 
 
+def list_physician_ids():
+    ret = list()
+    for physician in NewPhysician.objects.raw({}):
+        ret.append(physician.phys_id)
+    return ret
+
+
+def data_plot(phys_id):
+    phys_id = int(phys_id)
+    physician = NewPhysician.objects.raw({"_id": phys_id}).first()
+    neck_angles = physician.neck_angles
+    timestamp = physician.timestamp
+    phys_data = [neck_angles, timestamp]
+    return jsonify(phys_data)
+
+
 @app.route("/api/new_physician", methods=["POST"])
 def post_new_physician():
     in_dict = request.get_json()
@@ -79,6 +96,16 @@ def post_new_data():
     data = request.get_json()
     print("data received")
     return add_data(data)
+
+
+@app.route("/api/available_physician_ids", methods=["GET"])
+def get_physician_ids():
+    return jsonify(list_physician_ids())
+
+
+@app.route("/api/plot_phys_data/<phys_id>", methods=["GET"])
+def plot_data(phys_id):
+    return jsonify(data_plot(phys_id))
 
 
 if __name__ == '__main__':
