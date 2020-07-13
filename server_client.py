@@ -1,8 +1,12 @@
 import requests
 from datetime import datetime
+from configparser import ConfigParser
 
-server_name = "http://127.0.0.1:5000"
-# server_name = "http://vcm-15220.vm.duke.edu:5000"
+config = ConfigParser()
+config.read('config.ini')
+
+local_server_name = config['connections']['local_server']
+vm_server_name = config['connections']['vm_server']
 
 
 def add_new_physician():
