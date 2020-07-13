@@ -31,13 +31,13 @@ def physician_ids():
     print(r.text)
 
 
-def plot():
-    r = requests.get(server_name+"/api/plot_phys_data/1")
+def dates():
+    r = requests.get(server_name+"/api/retrieve_phys_dates/1")
     print(r.text)
 
 
 if __name__ == '__main__':
-    # plot()
+    # dates()
     physician_ids()
     # add_physician_data()
     # get_physician_status()

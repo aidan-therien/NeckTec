@@ -25,31 +25,12 @@ def get_available_physician_ids():
     return r.json()
 
 
-def load_patient_data(patient_id):
-    """
-    This function returns recent patient data for a specific id
-
-    This function makes a GET request for a specific patient id that
-    returns the patient's name, id, most recent heart rate, most
-    recent ecg image, and time of the most recent ecg upload.
-    :param patient_id: the id number of the patient of interest
-    :return: a list containing recent patient information
-    """
-    # This will make a request
-    r = requests.get(server_name + "/" + patient_id + "/load_recent_data")
-    return r.json()
-
-
-def plot_physician_data(phys_id):
-    r = requests.get(server_name + "/api/plot_phys_data/<phys_id>")
+def load_physician_dates(phys_id):
+    r = requests.get(server_name + "/api/retrieve_phys_dates/phys_id")
     return r.json()
 
 
 def design_window():
-
-    def send_data():
-        phys_id = physician_id_box.get()
-        plot_physician_data(phys_id)
 
     root = tk.Tk()
     root.title("Physician User Interface")
@@ -63,7 +44,7 @@ def design_window():
     physician_id_box.state(["readonly"])
     physician_id_box.grid(column=1, row=0)
 
-    load_physician_button = ttk.Button(root, text="Load Physician Data", command=send_data())
+    load_physician_button = ttk.Button(root, text="Load Physician Data")
     load_physician_button.grid(column=2, row=0)
 
     physician_session_text = ttk.Label(root, text="Select Date")
@@ -71,7 +52,8 @@ def design_window():
 
     session_choice = tk.StringVar()
     physician_session_box = ttk.Combobox(root, textvariable=session_choice)
-    # physician_session_box['values'] = get_available_physician_ids()
+    phys_id = physician_id_box.get()
+    physician_session_box['values'] = load_physician_dates(phys_id)
     physician_session_box.state(["readonly"])
     physician_session_box.grid(column=1, row=1)
 

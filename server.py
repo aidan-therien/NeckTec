@@ -69,13 +69,16 @@ def list_physician_ids():
     return ret
 
 
-def data_plot(phys_id):
+def get_dates(phys_id):
     phys_id = int(phys_id)
     physician = NewPhysician.objects.raw({"_id": phys_id}).first()
-    neck_angles = physician.neck_angles
-    timestamp = physician.timestamp
-    phys_data = [neck_angles, timestamp]
-    return jsonify(phys_data)
+    times = physician.timestamp
+    james = list()
+    james.append(times[0][0:10])
+    for x in range(1, len(times)):
+        if times[x][0:10] != times[x-1][0:10]:
+            james.append(times[x][0:10])
+    return james
 
 
 @app.route("/api/new_physician", methods=["POST"])
@@ -103,9 +106,9 @@ def get_physician_ids():
     return jsonify(list_physician_ids())
 
 
-@app.route("/api/plot_phys_data/<phys_id>", methods=["GET"])
-def plot_data(phys_id):
-    return jsonify(data_plot(phys_id))
+@app.route("/api/retrieve_phys_dates/<phys_id>", methods=["GET"])
+def retrieve_physician_dates(phys_id):
+    return jsonify(get_dates(phys_id))
 
 
 if __name__ == '__main__':
