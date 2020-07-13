@@ -4,7 +4,13 @@ import logging
 from datetime import datetime
 from pymodm import connect, MongoModel, fields
 from pymodm import errors as pymodm_errors
+from configparser import ConfigParser
 
+
+config = ConfigParser()
+config.read('config.ini')
+
+database_name = config['connections']['database']
 
 app = Flask(__name__)
 
@@ -53,8 +59,7 @@ def verify_new_phys(in_dict):
 
 def init_db():
     print("connecting to database...")
-    connect("mongodb+srv://aidan:necktec@cluster0.lmu1g.mongodb.net"
-            "/NeckTecDB?retryWrites=true&w=majority")
+    connect(database_name)
     print("database connected.")
 
 

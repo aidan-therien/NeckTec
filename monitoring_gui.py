@@ -7,8 +7,13 @@ import io
 import matplotlib.image as mpimg
 import requests
 from tkinter.filedialog import asksaveasfile
+from configparser import ConfigParser
 
-server_name = "http://127.0.0.1:5000"
+config = ConfigParser()
+config.read('config.ini')
+
+server_name = config['connections']['local_server']
+vm_server_name = config['connections']['vm_server']
 
 
 def get_available_patient_ids():
