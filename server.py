@@ -73,12 +73,12 @@ def get_dates(phys_id):
     phys_id = int(phys_id)
     physician = NewPhysician.objects.raw({"_id": phys_id}).first()
     times = physician.timestamp
-    james = list()
-    james.append(times[0][0:10])
+    dates = list()
+    dates.append(times[0][0:10])
     for x in range(1, len(times)):
         if times[x][0:10] != times[x-1][0:10]:
-            james.append(times[x][0:10])
-    return james
+            dates.append(times[x][0:10])
+    return dates
 
 
 @app.route("/api/new_physician", methods=["POST"])

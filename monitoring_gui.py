@@ -26,11 +26,15 @@ def get_available_physician_ids():
 
 
 def load_physician_dates(phys_id):
-    r = requests.get(server_name + "/api/retrieve_phys_dates/phys_id")
+    phys_id = str(phys_id)
+    r = requests.get(server_name + "/api/retrieve_phys_dates" + phys_id)
     return r.json()
 
 
 def design_window():
+
+    def send_data():
+        physician_session_box['values'] = load_physician_dates(physician_id_box.get())
 
     root = tk.Tk()
     root.title("Physician User Interface")
@@ -44,18 +48,16 @@ def design_window():
     physician_id_box.state(["readonly"])
     physician_id_box.grid(column=1, row=0)
 
-    load_physician_button = ttk.Button(root, text="Load Physician Data")
-    load_physician_button.grid(column=2, row=0)
-
     physician_session_text = ttk.Label(root, text="Select Date")
     physician_session_text.grid(column=0, row=1)
 
     session_choice = tk.StringVar()
     physician_session_box = ttk.Combobox(root, textvariable=session_choice)
-    phys_id = physician_id_box.get()
-    physician_session_box['values'] = load_physician_dates(phys_id)
     physician_session_box.state(["readonly"])
     physician_session_box.grid(column=1, row=1)
+
+    load_physician_button = ttk.Button(root, text="Confirm", command=send_data())
+    load_physician_button.grid(column=2, row=0)
 
     load_physician_button = ttk.Button(root, text="Load Session Data")
     # command=new_patient)
