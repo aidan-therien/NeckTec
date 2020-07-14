@@ -26,15 +26,17 @@ def get_available_physician_ids():
 
 
 def load_physician_dates(phys_id):
-    phys_id = str(phys_id)
-    r = requests.get(server_name + "/api/retrieve_phys_dates" + phys_id)
+    r = requests.get(server_name + "/api/retrieve_phys_dates/" + phys_id)
     return r.json()
 
 
 def design_window():
 
+    def load_dates():
+        return load_physician_dates(str(physician_choice.get()))
+
     def send_data():
-        physician_session_box['values'] = load_physician_dates(physician_id_box.get())
+        physician_session_box['values'] = load_dates()
 
     root = tk.Tk()
     root.title("Physician User Interface")
@@ -56,7 +58,7 @@ def design_window():
     physician_session_box.state(["readonly"])
     physician_session_box.grid(column=1, row=1)
 
-    load_physician_button = ttk.Button(root, text="Confirm", command=send_data())
+    load_physician_button = ttk.Button(root, text="Confirm", command=send_data)
     load_physician_button.grid(column=2, row=0)
 
     load_physician_button = ttk.Button(root, text="Load Session Data")
@@ -95,5 +97,3 @@ def design_window():
 
 if __name__ == '__main__':
     design_window()
-
-
