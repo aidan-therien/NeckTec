@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 from matplotlib import pyplot as plt
-import base64
 import io
 import matplotlib.image as mpimg
 import requests
