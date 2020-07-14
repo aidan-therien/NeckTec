@@ -5,7 +5,6 @@ from matplotlib import pyplot as plt
 import io
 import matplotlib.image as mpimg
 import requests
-from tkinter.filedialog import asksaveasfile
 from configparser import ConfigParser
 
 config = ConfigParser()
