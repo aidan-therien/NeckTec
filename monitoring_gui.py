@@ -27,7 +27,7 @@ def get_available_physician_ids():
     r = requests.get(server_name + "/api/available_physician_ids")
     return r.json()
 
-  
+
 def load_physician_dates(phys_id):
     r = requests.get(server_name + "/api/retrieve_phys_dates/" + phys_id)
     return r.json()
