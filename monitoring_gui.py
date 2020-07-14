@@ -36,7 +36,8 @@ def load_physician_dates(phys_id):
 
 
 def load_plot_data(phys_id, date):
-    r = requests.get(server_name + "/api/get_data/" + str(phys_id) + "/" + date)
+    r = requests.get(server_name + "/api/get_data/" + str(phys_id) +
+                     "/" + date)
     return r.json()
 
 
@@ -107,7 +108,8 @@ def design_window():
     load_physician_button = ttk.Button(root, text="Confirm", command=send_data)
     load_physician_button.grid(column=2, row=0)
 
-    load_physician_button = ttk.Button(root, text="Save Session Data", command=save_data)
+    load_physician_button = ttk.Button(root, text="Save Session Data",
+                                       command=save_data)
     load_physician_button.grid(column=2, row=1)
 
     display_physician_name_text = ttk.Label(root, text="Physician Name:")
