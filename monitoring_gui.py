@@ -142,7 +142,7 @@ def design_window():
 
     exit_button = ttk.Button(root, text="Exit")
     # command=cancel)
-    exit_button.grid(column=2, row=8)
+    exit_button.grid(column=3, row=8)
 
     reset_button = ttk.Button(root, text="Reset Data")
     # command=reset)
