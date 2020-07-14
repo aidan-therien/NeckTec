@@ -9,6 +9,7 @@ import requests
 from configparser import ConfigParser
 import numpy as np
 import base64
+import csv
 
 config = ConfigParser()
 config.read('config.ini')
