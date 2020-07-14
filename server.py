@@ -4,6 +4,7 @@ import logging
 from datetime import datetime
 from pymodm import connect, MongoModel, fields
 from pymodm import errors as pymodm_errors
+import matplotlib.pyplot as plt
 from configparser import ConfigParser
 
 
@@ -90,6 +91,25 @@ def add_data(data):
     return "Successfully added data", 200
 
 
+def list_physician_ids():
+    ret = list()
+    for physician in NewPhysician.objects.raw({}):
+        ret.append(physician.phys_id)
+    return ret
+
+
+def get_dates(phys_id):
+    phys_id = int(phys_id)
+    physician = NewPhysician.objects.raw({"_id": phys_id}).first()
+    times = physician.timestamp
+    dates = list()
+    dates.append(times[0][0:10])
+    for x in range(1, len(times)):
+        if times[x][0:10] != times[x-1][0:10]:
+            dates.append(times[x][0:10])
+    return dates
+
+
 @app.route("/api/new_physician", methods=["POST"])
 def post_new_physician():
     in_dict = request.get_json()
@@ -110,6 +130,16 @@ def post_new_data():
     if verify_data is not True:
         return verify_data, 400
     return add_data(data)
+
+
+@app.route("/api/available_physician_ids", methods=["GET"])
+def get_physician_ids():
+    return jsonify(list_physician_ids())
+
+
+@app.route("/api/retrieve_phys_dates/<phys_id>", methods=["GET"])
+def retrieve_physician_dates(phys_id):
+    return jsonify(get_dates(phys_id))
 
 
 if __name__ == '__main__':

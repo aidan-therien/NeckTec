@@ -30,7 +30,19 @@ def add_physician_data():
     print(r.text)
 
 
+def physician_ids():
+    r = requests.get(server_name+"/api/available_physician_ids")
+    print(r.text)
+
+
+def dates():
+    r = requests.get(server_name+"/api/retrieve_phys_dates/1")
+    print(r.text)
+
+
 if __name__ == '__main__':
-    add_physician_data()
+    # dates()
+    physician_ids()
+    # add_physician_data()
     # get_physician_status()
     # add_physician_data()
