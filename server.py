@@ -29,10 +29,8 @@ def read_physician(in_dict):
     return [phys, data, times]
 
 
-def add_physician_to_db(info):
-    phys = NewPhysician(phys_id=info[0],
-                        neck_angles=info[1],
-                        timestamp=info[2])
+def add_physician_to_db(phys_id):
+    phys = NewPhysician(phys_id=phys_id)
     phys.save()
 
 
@@ -110,11 +108,23 @@ def get_dates(phys_id):
     return dates
 
 
+def retrieve_session_data(phys, date):
+    raw_data = phys.neck_angles
+    raw_dates = phys.timestamp
+    ret = [list(), list()]
+    for val, time in zip(raw_data, raw_dates):
+        if time[0:10] == date:
+            ret[0].append(val)
+            ret[1].append(time)
+        else:
+            continue
+    return ret
+
+
 @app.route("/api/new_physician", methods=["POST"])
 def post_new_physician():
     in_dict = request.get_json()
-    physician_info = read_physician(in_dict)
-    add_physician_to_db(physician_info)
+    add_physician_to_db(in_dict["phys_id"])
     return "Successfully added physician to database.", 400
 
 
@@ -140,6 +150,16 @@ def get_physician_ids():
 @app.route("/api/retrieve_phys_dates/<phys_id>", methods=["GET"])
 def retrieve_physician_dates(phys_id):
     return jsonify(get_dates(phys_id))
+
+
+@app.route("/api/get_data/<phys_id>/<date>")
+def get_session_data(phys_id, date):
+    phys_id = int(phys_id)
+    try:
+        temp = NewPhysician.objects.raw({"_id": phys_id}).first()
+    except pymodm_errors.DoesNotExist:
+        return "Physician not found", 400
+    return jsonify(retrieve_session_data(temp, date))
 
 
 if __name__ == '__main__':

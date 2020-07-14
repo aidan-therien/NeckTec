@@ -8,3 +8,4 @@ scipy
 pymodm
 dnspython
 configparser
+numpy
