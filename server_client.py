@@ -39,7 +39,7 @@ def dates():
 
 
 def data():
-    r = requests.get(server_name+"/api/get_data/1/2020-07-01")
+    r = requests.get(server_name+"/api/get_data/10/2020-07-14")
     print(r.text)
 
 
