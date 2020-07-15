@@ -10,6 +10,7 @@ from configparser import ConfigParser
 import numpy as np
 import base64
 import csv
+import csv
 
 config = ConfigParser()
 config.read('config.ini')
@@ -86,6 +87,23 @@ def design_window():
         load_plot_for_display()
         display_timestamp_range(data[1])
 
+    def data_save():
+        physician_id = physician_choice.get()
+        time = session_choice.get()
+        time_data = load_plot_data(physician_id, time)
+        d = {}
+        for elem in time_data:
+            if elem[1] in d:
+                d[elem[1]].append(elem[0])
+            else:
+                d[elem[1]] = [elem[0]]
+        filename = "neck angle data: " + time
+        fields = ['neck angles', 'timestamps']
+        with open(filename, 'w') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fields)
+            writer.writeheader()
+            writer.writerows(d)
+
     root = tk.Tk()
     root.title("Physician User Interface")
 
@@ -140,6 +158,9 @@ def design_window():
 
     display_timestamp_value = ttk.Label(root)
     display_timestamp_value.grid(column=1, row=5)
+
+    csv_button = ttk.Button(root, text="Download Data", command=data_save)
+    csv_button.grid(column=2, row=8)
 
     exit_button = ttk.Button(root, text="Exit")
     # command=cancel)
