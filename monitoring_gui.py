@@ -91,18 +91,29 @@ def design_window():
         physician_id = physician_choice.get()
         time = session_choice.get()
         time_data = load_plot_data(physician_id, time)
-        d = {}
-        for elem in time_data:
-            if elem[1] in d:
-                d[elem[1]].append(elem[0])
-            else:
-                d[elem[1]] = [elem[0]]
-        filename = "neck angle data: " + time
-        fields = ['neck angles', 'timestamps']
-        with open(filename, 'w') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=fields)
-            writer.writeheader()
-            writer.writerows(d)
+        list1 = []
+        list2 = []
+
+        for i in range(len(time_data)):
+            for j in range(len(time_data[i])):
+                if i == 0:
+                    list1.append(time_data[i][j])
+                else:
+                    list2.append(time_data[i][j])
+
+        a_file = open("neck angle data: " + time + ".csv", "w")
+        a_dict = {}
+        for key in list1:
+            for value in list2:
+                a_dict[key] = value
+                list2.remove(value)
+                break
+
+        writer = csv.writer(a_file)
+        for key, value in a_dict.items():
+            writer.writerow([key, value])
+
+        a_file.close()
 
     root = tk.Tk()
     root.title("Physician User Interface")

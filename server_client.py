@@ -38,10 +38,16 @@ def dates():
     print(r.text)
 
 
+def data():
+    r = requests.get(server_name+"/api/get_data/1/2020-07-01")
+    print(r.text)
+
+
 if __name__ == '__main__':
+    data()
     # dates()
     # physician_ids()
     # add_physician_data()
     # get_physician_status()
-    add_physician_data()
+    # add_physician_data()
     # add_new_physician()
