@@ -36,7 +36,7 @@ def add_physician_to_db(phys_id):
 
 def verify_input(in_dict):
     expected_keys = ("phys_id", "data")
-    expected_values = (int, float)
+    expected_values = (int, list)
     for key, ty in zip(expected_keys, expected_values):
         if key not in in_dict.keys():
             return "{} key not found in input".format(key)
@@ -81,8 +81,9 @@ def add_data(data):
         temp = NewPhysician.objects.raw({"_id": phys_id}).first()
     except pymodm_errors.DoesNotExist:
         return "Physician not found", 400
-    flag = verify_input(data)
-    temp.neck_angles.append(float(data["data"]))
+    for i in data["data"]:
+        flag = verify_input(data)
+        temp.neck_angles.append(float(i))
     temp.timestamp.append(datetime.strftime(datetime.now(),
                                             "%Y-%m-%d %H:%M:%S"))
     temp.save()
