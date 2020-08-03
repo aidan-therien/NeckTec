@@ -96,6 +96,17 @@ def design_window():
             a_file.write(str(val) + ", " + t + "\n")
         a_file.close()
 
+    def reset():
+        nonlocal display_timestamp
+        nonlocal display_plot
+
+        physician_id_box.set('')
+        physician_session_box.set('')
+        display_timestamp.configure(text="")
+        display_plot.grid_remove()
+        display_plot = ttk.Label(root)
+        display_plot.grid(column=1, row=3)
+
     root = tk.Tk()
     root.title("Physician User Interface")
 
@@ -158,8 +169,8 @@ def design_window():
     # command=cancel)
     exit_button.grid(column=3, row=8)
 
-    reset_button = ttk.Button(root, text="Reset Data")
-    # command=reset)
+    reset_button = ttk.Button(root, text="Reset Data", command=reset)
+
     reset_button.grid(column=0, row=8)
 
     root.mainloop()
