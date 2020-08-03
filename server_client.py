@@ -23,7 +23,7 @@ def get_physician_status():
 
 def add_physician_data():
     data = {"phys_id": 10,
-            "data": 4.9}
+            "data": [10.0, 11.0, 12.0, 13.0, 14.0, 15.0]}
     r = requests.post(server_name+"/api/add", json=data)
     print(r.text)
 
@@ -44,10 +44,10 @@ def data():
 
 
 if __name__ == '__main__':
-    data()
+    # data()
     # dates()
     # physician_ids()
-    # add_physician_data()
+    add_physician_data()
     # get_physician_status()
     # add_physician_data()
     # add_new_physician()
