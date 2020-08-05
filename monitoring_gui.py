@@ -43,6 +43,12 @@ def load_plot_data(phys_id, date):
     return r.json()
 
 
+def send_phys_to_server(phys_id):
+    new_physician = {"phys_id": phys_id}
+    r = requests.post(server_name + "/api/new_physician", json=new_physician)
+    print (r.text)
+
+
 def design_window():
 
     def load_dates():
@@ -107,6 +113,9 @@ def design_window():
         display_plot = ttk.Label(root)
         display_plot.grid(column=1, row=3)
 
+    def register_id():
+        send_phys_to_server(id_entry.get())
+
     root = tk.Tk()
     root.title("Physician User Interface")
 
@@ -134,8 +143,16 @@ def design_window():
                                        command=save_data)
     load_physician_button.grid(column=2, row=1)
 
-    display_physician_name_text = ttk.Label(root, text="Physician Name:")
-    display_physician_name_text.grid(column=0, row=2, sticky="E")
+    new_physician_text = ttk.Label(root, text="New Physician")
+    new_physician_text.grid(column=0, row=2)
+
+    id_entry = tk.StringVar()
+    id_entry.set("Register New Id")
+    id_entry_box = ttk.Entry(root, width=22, textvariable=id_entry)
+    id_entry_box.grid(column=1, row=2, sticky="E")
+
+    register_physician_button = ttk.Button(root, text="Confirm", command=register_id)
+    register_physician_button.grid(column=2, row=2)
 
     plot_text = ttk.Label(root, text="Neck Angle Plot:")
     plot_text.grid(column=0, row=3)
