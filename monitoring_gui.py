@@ -11,6 +11,10 @@ import numpy as np
 import base64
 import csv
 import csv
+import subprocess
+import os
+import shutil
+import time
 
 config = ConfigParser()
 config.read('config.ini')
@@ -116,6 +120,10 @@ def design_window():
     def register_id():
         send_phys_to_server(id_entry.get())
 
+    def master_download():
+        cmd = "mongoexport --collection=NeckTecDB <options> --out=events.csv"
+        print(subprocess.check_output(cmd, stderr=subprocess.STDOUT, shell=True))
+
     root = tk.Tk()
     root.title("Physician User Interface")
 
@@ -170,24 +178,16 @@ def design_window():
     display_timestamp = ttk.Label(root)
     display_timestamp.grid(column=1, row=4)
 
-    display_physician_id_value = ttk.Label(root)
-    display_physician_id_value.grid(column=1, row=2)
-
-    display_physician_name_value = ttk.Label(root)
-    display_physician_name_value.grid(column=1, row=3)
-
     display_timestamp_value = ttk.Label(root)
     display_timestamp_value.grid(column=1, row=5)
 
-    csv_button = ttk.Button(root, text="Download Data", command=data_save)
+    csv_button = ttk.Button(root, text="Download Session Data", command=data_save)
     csv_button.grid(column=2, row=8)
 
-    exit_button = ttk.Button(root, text="Exit")
-    # command=cancel)
-    exit_button.grid(column=3, row=8)
+    exit_button = ttk.Button(root, text="Master Download", command=master_download)
+    exit_button.grid(column=2, row=7)
 
     reset_button = ttk.Button(root, text="Reset Data", command=reset)
-
     reset_button.grid(column=0, row=8)
 
     root.mainloop()
