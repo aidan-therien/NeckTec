@@ -82,7 +82,6 @@ def add_data(data):
     except pymodm_errors.DoesNotExist:
         return "Physician not found", 400
     for i in data["data"]:
-        flag = verify_input(data)
         temp.neck_angles.append(float(i))
     temp.timestamp.append(datetime.strftime(datetime.now(),
                                             "%Y-%m-%d %H:%M:%S"))
