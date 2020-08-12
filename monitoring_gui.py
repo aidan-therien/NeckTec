@@ -105,7 +105,6 @@ def design_window():
         display_timestamp.configure(text="")
         display_plot.grid_remove()
         display_plot = ttk.Label(root)
-        display_plot.grid(column=1, row=3)
 
     root = tk.Tk()
     root.title("Physician User Interface")
@@ -155,9 +154,6 @@ def design_window():
 
     display_physician_id_value = ttk.Label(root)
     display_physician_id_value.grid(column=1, row=2)
-
-    display_physician_name_value = ttk.Label(root)
-    display_physician_name_value.grid(column=1, row=3)
 
     display_timestamp_value = ttk.Label(root)
     display_timestamp_value.grid(column=1, row=5)
