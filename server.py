@@ -36,7 +36,7 @@ def add_physician_to_db(phys_id):
 
 def verify_input(in_dict):
     expected_keys = ("phys_id", "data")
-    expected_values = (int, list)
+    expected_values = (str, list)
     for key, ty in zip(expected_keys, expected_values):
         if key not in in_dict.keys():
             return "{} key not found in input".format(key)
@@ -63,7 +63,6 @@ def init_db():
 
 
 def retrieve_physician_status(phys_id):
-    phys_id = int(phys_id)
     try:
         temp = NewPhysician.objects.raw({"_id": phys_id}).first()
         neck_angles = temp.neck_angles
@@ -77,12 +76,17 @@ def retrieve_physician_status(phys_id):
 
 def add_data(data):
     phys_id = int(data["phys_id"])
+    print(phys_id)
     try:
         temp = NewPhysician.objects.raw({"_id": phys_id}).first()
     except pymodm_errors.DoesNotExist:
         return "Physician not found", 400
-    for i in data["data"]:
-        temp.neck_angles.append(float(i))
+    temp.neck_angles.append(float(data["a"]))
+    temp.neck_angles.append(float(data["b"]))
+    temp.neck_angles.append(float(data["c"]))
+    temp.neck_angles.append(float(data["d"]))
+    temp.neck_angles.append(float(data["e"]))
+    temp.neck_angles.append(float(data["f"]))
     temp.timestamp.append(datetime.strftime(datetime.now(),
                                             "%Y-%m-%d %H:%M:%S"))
     temp.save()
@@ -97,7 +101,6 @@ def list_physician_ids():
 
 
 def get_dates(phys_id):
-    phys_id = int(phys_id)
     physician = NewPhysician.objects.raw({"_id": phys_id}).first()
     times = physician.timestamp
     dates = list()
@@ -136,9 +139,9 @@ def get_physician_status(phys_id):
 @app.route("/api/add", methods=["POST"])
 def post_new_data():
     data = request.get_json()
-    verify_data = verify_input(data)
-    if verify_data is not True:
-        return verify_data, 400
+    #  verify_data = verify_input(data)
+    # if verify_data is not True:
+    #    return "data in incorrect format", 400
     return add_data(data)
 
 
@@ -154,7 +157,6 @@ def retrieve_physician_dates(phys_id):
 
 @app.route("/api/get_data/<phys_id>/<date>")
 def get_session_data(phys_id, date):
-    phys_id = int(phys_id)
     try:
         temp = NewPhysician.objects.raw({"_id": phys_id}).first()
     except pymodm_errors.DoesNotExist:
@@ -166,4 +168,4 @@ if __name__ == '__main__':
     logging.basicConfig(filename="status.log", filemode='w',
                         level=logging.DEBUG)
     init_db()
-    app.run()
+    app.run("0.0.0.0")
