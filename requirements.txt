@@ -9,5 +9,5 @@ pymodm
 dnspython
 configparser
 numpy
-gunicorn flask
+gunicorn
 wheel
