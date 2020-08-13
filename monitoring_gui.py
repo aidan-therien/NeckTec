@@ -75,7 +75,7 @@ def design_window():
         date = session_choice.get()
         data = load_plot_data(phys_id, date)
         plt.clf()
-        plt.plot(data[0], np.linspace(0, len(data[0])-1, len(data[0])))
+        plt.plot(np.linspace(0, len(data[0])-1, len(data[0])), data[0])
         plt.xlabel("Time (s)")
         plt.ylabel("Angle (degree)")
         plot_bytes = BytesIO()
@@ -92,7 +92,7 @@ def design_window():
         time = session_choice.get()
         time_data = load_plot_data(physician_id, time)
         a_file = open(time + ": neck_angle_data" + ".csv", "w")
-        for val,t in zip(time_data[0], time_data[1]):
+        for val, t in zip(time_data[0], time_data[1]):
             a_file.write(str(val) + ", " + t + "\n")
         a_file.close()
 
@@ -132,9 +132,6 @@ def design_window():
     load_physician_button = ttk.Button(root, text="Save Session Data",
                                        command=save_data)
     load_physician_button.grid(column=2, row=1)
-
-    display_physician_name_text = ttk.Label(root, text="Physician Name:")
-    display_physician_name_text.grid(column=0, row=2, sticky="E")
 
     plot_text = ttk.Label(root, text="Neck Angle Plot:")
     plot_text.grid(column=0, row=3)
