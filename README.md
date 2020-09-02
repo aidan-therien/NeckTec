@@ -33,7 +33,7 @@ Now, if you type into the command line `python server.py`, your server will run 
 
 
 #### Using The Monitoring-Station Client
-To use the monitoring-station client, open up a terminal and navigate using the command line to the folder containing the python module `monitoring_station_gui_client.py`.
+To use the monitoring-station client, open up a terminal and navigate using the command line to the folder containing the python module `monitoring_gui.py`.
 On the command line type `python mpnitoring_gui.py` and hit `Enter` or `Return`.
 You will now see window open up on the screen of your computer that looks like:
 
