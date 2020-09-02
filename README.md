@@ -56,7 +56,7 @@ http://vcm-15220.vm.duke.edu:5000
 ## Software License 
 MIT License
 
-Copyright (c) 2020 Aidan Therien, Canyon Duncan
+Copyright (c) 2020 Aidan Therien, James Allen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
