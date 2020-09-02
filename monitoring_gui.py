@@ -76,6 +76,9 @@ def design_window():
         data = load_plot_data(phys_id, date)
         plt.clf()
         plt.plot(np.linspace(0, len(data[0])-1, len(data[0])), data[0])
+        for val, cord in zip(data[0],np.linspace(0, len(data[0]))):
+            if val > 15:
+                plt.plot(cord, val, "-r")
         plt.xlabel("Time (s)")
         plt.ylabel("Angle (degree)")
         plot_bytes = BytesIO()
