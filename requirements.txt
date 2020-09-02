@@ -9,3 +9,5 @@ pymodm
 dnspython
 configparser
 numpy
+gunicorn
+wheel

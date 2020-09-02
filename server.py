@@ -101,6 +101,7 @@ def list_physician_ids():
 
 
 def get_dates(phys_id):
+    phys_id = int(phys_id)
     physician = NewPhysician.objects.raw({"_id": phys_id}).first()
     times = physician.timestamp
     dates = list()
@@ -157,6 +158,7 @@ def retrieve_physician_dates(phys_id):
 
 @app.route("/api/get_data/<phys_id>/<date>")
 def get_session_data(phys_id, date):
+    phys_id = int(phys_id)
     try:
         temp = NewPhysician.objects.raw({"_id": phys_id}).first()
     except pymodm_errors.DoesNotExist:

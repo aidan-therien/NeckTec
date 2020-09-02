@@ -11,8 +11,8 @@ vm_server_name = config['connections']['vm_server']
 
 def add_new_physician():
     str_time = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
-    new_physician = {"phys_id": 10}
-    r = requests.post(server_name+"/api/new_physician", json=new_physician)
+    data = {"phys_id": "14"}
+    r = requests.post(server_name+"/api/new_physician", json=data)
     print(r.text)
 
 
@@ -22,8 +22,8 @@ def get_physician_status():
 
 
 def add_physician_data():
-    data = {"phys_id": 10,
-            "data": [10.0, 11.0, 12.0, 13.0, 14.0, 15.0]}
+    data = {"data": [16.78, 10.12, 5, 7, 8],
+            "phys_id": "14"}
     r = requests.post(server_name+"/api/add", json=data)
     print(r.text)
 
@@ -44,6 +44,7 @@ def data():
 
 
 if __name__ == '__main__':
+
     # data()
     # dates()
     # physician_ids()
