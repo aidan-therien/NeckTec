@@ -37,7 +37,7 @@ To use the monitoring-station client, open up a terminal and navigate using the 
 On the command line type `python mpnitoring_gui.py` and hit `Enter` or `Return`.
 You will now see window open up on the screen of your computer that looks like:
 
-![alt text](https://github.com/BME547-Summer2020/final-project-duncan-therien/blob/master/Monitoring_station_GUI.jpg)
+![alt text](https://github.com/aidan-therien/NeckTec/blob/master/Monitoring_GUI.JPG)
 
 This monitoring-station graphical user interface enables a user to select a physician ID from a drop-down menu and load recent data.
 Click the down arrow on the drop-down box at the top of the GUI window and select the ID of the physician that you are interested in monitoring.
